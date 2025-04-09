@@ -1,0 +1,91 @@
+/* Mise en page de base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-image: url(assets/background.jpg);
+    background-size: cover; /* Image de fond qui couvre toute la page */
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    cursor: url('assets/crosshair.png') 32 32, crosshair; /* Curseur personnalisé */
+}
+
+main {
+    margin-top: 50px;
+}
+
+
+
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.content {
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.content.shifted {
+    margin-left: 250px;
+}
+
+
+/* Style des agents */
+.agents-container {
+    position: fixed;
+    margin-top: 230px;
+    margin-left: 380px;
+    display: flex;
+    justify-content: right;
+    position: relative;
+    width: 80%;
+    height: 500px;
+}
+
+.agent.neon {
+    transform: scaleX(-1);
+}
+
+
+/* Affichage du score de monnaie */
+#currencyDisplay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    margin-top: 50px;
+    align-items: center;
+    background-color: rgba(0,0,0,0.6);
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    font-size: 22px;
+    z-index: 1001;
+}
+
+.money-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    image-rendering: auto;
+    filter: drop-shadow(0 0 5px gold);
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}

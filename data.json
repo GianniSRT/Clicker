@@ -1,0 +1,28 @@
+{
+  "clics": 0,
+  "valeur_par_clic": 1,
+  "clickeurs_automatiques": 0,
+  "vitesse_clic_automatique": 1,
+  "ameliorations": {
+    "agents": [
+      { "nom": "Sage", "prix": 100, "image": "assets/sage.png", "achete": false },
+      { "nom": "Neon", "prix": 150, "image": "assets/neon.png", "achete": false },
+      { "nom": "Viper", "prix": 200, "image": "assets/viper.webp", "achete": false },
+      { "nom": "Gekko", "prix": 250, "image": "assets/gekko.png", "achete": false },
+      { "nom": "Phoenix", "prix": 300, "image": "assets/phoenix.webp", "achete": false }
+    ],
+    "armes": [
+      { "nom": "Ghost", "prix": 100, "image": "assets/ghost.png", "achete": false },
+      { "nom": "Spectre", "prix": 200, "image": "assets/spectre.png", "achete": false },
+      { "nom": "Vandal", "prix": 300, "image": "assets/vandal.png", "achete": false },
+      { "nom": "OP", "prix": 400, "image": "assets/operator.png", "achete": false }
+    ],
+    "competences": [
+      { "nom": "Courant ascendant", "prix": 150, "image": "assets/courant_ascendant.webp", "achete": false },
+      { "nom": "Vent arrière", "prix": 200, "image": "assets/vent_arriere.webp", "achete": false },
+      { "nom": "Averse", "prix": 250, "image": "assets/averse.webp", "achete": false },
+      { "nom": "Tempête de lames", "prix": 300, "image": "assets/tempete_de_lames.webp", "achete": false }
+    ]
+  },
+  "derniere_sauvegarde": "2025-04-09T14:30:00Z"
+}

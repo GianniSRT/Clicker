@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" href="ameliorations.css">
+</head>
+
+<body>
+    <main class="d-flex">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Stand de tir</a>
+                <a class="navbar-brand" href="ameliorations.html">Boutique</a>
+                <a class="navbar-brand" href="#">Succès</a>
+            </div>
+        </nav>
+        
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+    
+        <!-- Contenu principal -->
+        <div class="content" id="mainContent">
+            <!-- Section Améliorations (cachée par défaut) -->
+            <div class="card-section col-row" id="ameliorations">
+                <h1 class="mb-4">Améliorations</h1>
+        
+                <div class="d-flex flex-row justify-content-between gap-4 flex-wrap">
+                    <div class="card p-3 flex-fill">
+                        <h2>Agents</h2>
+                        <ul id="liste-agents" class="list-group"></ul>
+                    </div>
+                    
+                    <div class="card p-3 flex-fill">
+                        <h2>Armes</h2>
+                        <ul id="liste-armes" class="list-group"></ul>
+                    </div>
+                    
+                    <div class="card p-3 flex-fill">
+                        <h2>Compétences</h2>
+                        <ul id="liste-competences" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="ameliorations.js"></script>
+</body>
+</html>
