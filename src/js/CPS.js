@@ -1,33 +1,48 @@
-// CPS.js
 document.addEventListener('DOMContentLoaded', function () {
     const jett = document.querySelector('.agent.jett');
+    const agentImage = document.querySelector('.agent');
     const scoreDisplay = document.getElementById('currencyDisplay');
+    const pixelHealthFill = document.getElementById("pixel-health-fill");
 
     if (!jett) {
         console.error("L'image Jett n'a pas été trouvée !");
         return;
     }
 
+    // === INITIALISATION ===
     let credits = parseInt(localStorage.getItem('credits')) || 1000;
-    function updateCreditsDisplay() {
-        scoreDisplay.innerHTML = `
-            <div class="score-container d-flex align-items-center text-light">
-                <img src="assets/money.webp" alt="money" class="money-icon me-2" />
-                <span id="score">${credits}</span>
-            </div>
-        `;
-    }
-    function saveCreditsToLocalStorage() {
-        localStorage.setItem('credits', credits);
-    }
-    updateCreditsDisplay();
-
     let totalClicks = parseInt(localStorage.getItem('totalClicks')) || 0;
     let unlockedSucces = JSON.parse(localStorage.getItem('unlockedSucces')) || [];
     let clickTimestamps = [];
     let currentStreak = 0;
     let lastAgent = '';
     let inactivityTimer = null;
+    let clickMultiplier = 1;
+    let health = 100;
+
+    const characters = [
+        'assets/Jett.gif',
+        'assets/Chamber.gif',
+        'assets/Neon.gif',
+        'assets/Omen.gif',
+        'assets/Skye.gif'
+    ];
+    let currentCharacterIndex = 0;
+    const chamberOffsetX = 7;
+
+    // === UI UPDATE FUNCTIONS ===
+    function updateCreditsDisplay() {
+        scoreDisplay.innerHTML = `
+            <div class="score-container d-flex align-items-center text-light">
+                <img src="assets/money.webp" alt="money" class="money-icon me-2" />
+                <span id="score">${Math.floor(credits)}</span>
+            </div>
+        `;
+    }
+
+    function saveCreditsToLocalStorage() {
+        localStorage.setItem('credits', Math.floor(credits));
+    }
 
     function saveClicks() {
         localStorage.setItem('totalClicks', totalClicks);
@@ -67,19 +82,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    let health = 100;
-    const pixelHealthFill = document.getElementById("pixel-health-fill");
-    const agentImage = document.querySelector(".agent");
+    function updateClickMultiplier() {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        let totalMultiplier = 1;
 
-    const characters = [
-        'assets/Jett.gif',
-        'assets/Chamber.gif',
-        'assets/Neon.gif',
-        'assets/Omen.gif',
-        'assets/Skye.gif'
-    ];
-    let currentCharacterIndex = 0;
-    let chamberOffsetX = 7;
+        ['agents', 'armes', 'competences'].forEach(category => {
+            if (ameliorations[category]) {
+                ameliorations[category].forEach(item => {
+                    totalMultiplier += (item.nombre_achat || 0) * (item.multiplicateur || 1);
+                });
+            }
+        });
+
+        clickMultiplier = Math.floor(totalMultiplier);
+    }
 
     function changeCharacter() {
         currentCharacterIndex = (currentCharacterIndex + 1) % characters.length;
@@ -98,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
         pixelHealthFill.style.width = health + "%";
     }
 
+    // === EVENT ===
     agentImage.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -111,6 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (clickTimestamps.length >= 10) unlockSucces("eco", "Eco Round?");
 
         if (health <= 5) unlockSucces("clutch", "Clutch");
+
+        // Appliquer le multiplicateur de crédits
+        credits += clickMultiplier;
 
         if (health > 0) {
             health -= 5;
@@ -137,9 +157,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 10000);
         }
 
-        credits++;
         saveCreditsToLocalStorage();
         saveClicks();
         updateCreditsDisplay();
     });
+
+    // === INIT ===
+    updateClickMultiplier();
+    updateCreditsDisplay();
 });
