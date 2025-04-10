@@ -5,23 +5,23 @@
   "vitesse_clic_automatique": 1,
   "ameliorations": {
     "agents": [
-      { "nom": "Sage", "prix": 100, "image": "assets/sage.png", "achete": false },
-      { "nom": "Neon", "prix": 150, "image": "assets/neon.png", "achete": false },
-      { "nom": "Viper", "prix": 200, "image": "assets/viper.webp", "achete": false },
-      { "nom": "Gekko", "prix": 250, "image": "assets/gekko.png", "achete": false },
-      { "nom": "Phoenix", "prix": 300, "image": "assets/phoenix.webp", "achete": false }
+      { "nom": "Sage", "prix": 150, "image": "assets/sage.png", "achete": false, "multiplicateur": 1.5 },
+      { "nom": "Neon", "prix": 300, "image": "assets/neon.png", "achete": false, "multiplicateur": 2.5 },
+      { "nom": "Viper", "prix": 600, "image": "assets/viper.webp", "achete": false, "multiplicateur": 4 },
+      { "nom": "Gekko", "prix": 1200, "image": "assets/gekko.png", "achete": false, "multiplicateur": 6 },
+      { "nom": "Phoenix", "prix": 2400, "image": "assets/phoenix.webp", "achete": false, "multiplicateur": 9 }
     ],
     "armes": [
-      { "nom": "Ghost", "prix": 100, "image": "assets/ghost.png", "achete": false },
-      { "nom": "Spectre", "prix": 200, "image": "assets/spectre.png", "achete": false },
-      { "nom": "Vandal", "prix": 300, "image": "assets/vandal.png", "achete": false },
-      { "nom": "OP", "prix": 400, "image": "assets/operator.png", "achete": false }
+      { "nom": "Ghost", "prix": 500, "image": "assets/ghost.png", "achete": false, "multiplicateur": 5 },
+      { "nom": "Spectre", "prix": 1000, "image": "assets/spectre.png", "achete": false, "multiplicateur": 8 },
+      { "nom": "Vandal", "prix": 2000, "image": "assets/vandal.png", "achete": false, "multiplicateur": 12 },
+      { "nom": "OP", "prix": 4000, "image": "assets/operator.png", "achete": false, "multiplicateur": 18 }
     ],
     "competences": [
-      { "nom": "Courant ascendant", "prix": 150, "image": "assets/courant_ascendant.webp", "achete": false },
-      { "nom": "Vent arrière", "prix": 200, "image": "assets/vent_arriere.webp", "achete": false },
-      { "nom": "Averse", "prix": 250, "image": "assets/averse.webp", "achete": false },
-      { "nom": "Tempête de lames", "prix": 300, "image": "assets/tempete_de_lames.webp", "achete": false }
+      { "nom": "Courant ascendant", "prix": 750, "image": "assets/courant_ascendant.webp", "achete": false, "multiplicateur": 7 },
+      { "nom": "Vent arrière", "prix": 1500, "image": "assets/vent_arriere.webp", "achete": false, "multiplicateur": 12 },
+      { "nom": "Averse", "prix": 3000, "image": "assets/averse.webp", "achete": false, "multiplicateur": 20 },
+      { "nom": "Tempête de lames", "prix": 6000, "image": "assets/tempete_de_lames.webp", "achete": false, "multiplicateur": 30 }
     ]
   },
   "derniere_sauvegarde": "2025-04-09T14:30:00Z"

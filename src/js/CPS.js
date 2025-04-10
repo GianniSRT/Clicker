@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Récupérer les crédits depuis le localStorage ou initialiser à 1000 (comme dans ameliorations.js)
     let credits = parseInt(localStorage.getItem('credits')) || 1000;
 
+    let clickMultiplier = 1; // Multiplicateur par défaut
+
     // Afficher les crédits au chargement de la page
     updateCreditsDisplay();
 
@@ -19,23 +21,46 @@ document.addEventListener('DOMContentLoaded', function () {
         scoreDisplay.innerHTML = `
             <div class="score-container d-flex align-items-center text-light">
                 <img src="assets/money.webp" alt="money" class="money-icon me-2" />
-                <span id="score">${credits}</span>
+                <span id="score">${Math.floor(credits)}</span> <!-- Arrondir les crédits -->
             </div>
         `;
     }
 
     // Fonction pour sauvegarder les crédits (identique à celle dans ameliorations.js)
     function saveCreditsToLocalStorage() {
-        localStorage.setItem('credits', credits);
+        localStorage.setItem('credits', Math.floor(credits)); // Sauvegarder les crédits arrondis
     }
 
     // Fonction de clic sur Jett
     jett.addEventListener('click', () => {
         console.log('Jett a été cliqué');
-        credits++;  // Incrémente les crédits de 1
+        console.log(`Multiplicateur actuel : ${clickMultiplier}`); // Vérifiez la valeur
+        credits += clickMultiplier;  // Applique le multiplicateur
+        credits = Math.floor(credits); // Arrondir les crédits à l'entier inférieur
         saveCreditsToLocalStorage();
         updateCreditsDisplay();
     });
+
+    // Fonction pour mettre à jour le multiplicateur
+    function updateClickMultiplier() {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        let totalMultiplier = 1; // Multiplicateur de base
+
+        // Parcourir les catégories d'améliorations
+        ['agents', 'armes', 'competences'].forEach(category => {
+            if (ameliorations[category]) {
+                ameliorations[category].forEach(item => {
+                    totalMultiplier += (item.nombre_achat || 0) * (item.multiplicateur || 1);
+                });
+            }
+        });
+
+        clickMultiplier = Math.floor(totalMultiplier); // Arrondir le multiplicateur total
+        console.log(`Nouveau multiplicateur de clic : ${clickMultiplier}`);
+    }
+
+    // Mettre à jour le multiplicateur au chargement
+    updateClickMultiplier();
 
     let health = 100;
     const pixelHealthFill = document.getElementById("pixel-health-fill");
@@ -86,5 +111,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (health <= 0) {
             changeCharacter();
         }
+        
     });
+
+    if (item.category === 'agents') {
+        updateClickMultiplier(item.multiplicateur); // Met à jour le multiplicateur
+    }
 });
