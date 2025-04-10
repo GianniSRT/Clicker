@@ -1,86 +1,148 @@
+/* Style de base */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
     background-image: url(assets/background.jpg);
-    background-size: cover; /* Modifié de 'auto' à 'cover' */
-    background-position: center center; /* Centre l'image */
-    background-repeat: no-repeat; /* Empêche la répétition */
-    background-attachment: fixed; /* Fixe l'image pendant le défilement */
-    min-height: 100vh; /* Prend toute la hauteur de l'écran */
-}
-
-
-.sidebar {
-    z-index: 1000;
-    width: 250px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-.sidebar.show {
-    transform: translateX(0);
-}
-
-.menu-item {
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.menu-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.menu-item.active {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
-}
-
-.content {
-    margin-top: 50px;
-    padding: 20px;
-    transition: margin-left 0.3s;
-}
-
-.content.shifted {
-    margin-left: 250px;
-}
-
-.card {
-    width: 300px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: white;
+    cursor: url('assets/crosshair.png') 32 32, crosshair;
   }
-
-  .card img {
+  
+  /* ==================== Navbar cohérente ==================== */
+  .navbar {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .navbar-brand {
+    font-size: 1.6rem;
+    color: white !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+  
+  .navbar-brand:hover {
+    text-shadow: 0 0 8px #ffbf00cc;
+  }
+  
+  .navbar-nav .nav-link {
+    position: relative;
+    font-size: 1.1rem;
+    color: white !important;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+  }
+  
+  .navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background-color: #ffbf00;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    color: #ffbf00 !important;
+    background-color: rgba(255, 191, 0, 0.1);
+    border-radius: 6px;
+    transform: scale(1.05);
+    text-shadow: 0 0 5px #ffbf00aa;
+  }
+  
+  .navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+  
+  .navbar-nav .nav-link.active {
+    color: #ffbf00 !important;
+    font-weight: bold;
+    text-shadow: 0 0 6px #ffbf00cc;
+  }
+  
+  .navbar-toggler {
+    border-color: white !important;
+    transition: transform 0.3s ease;
+  }
+  
+  .navbar-toggler:hover {
+    transform: rotate(90deg);
+  }
+  
+  .navbar-toggler-icon {
+    background-color: white !important;
+  }
+  
+  /* ==================== Section titres ==================== */
+  .section-title {
+    font-size: 2.8rem;
+    text-transform: uppercase;
+    color: #ffbf00;
+    text-shadow: 0 0 10px #ffbf00aa;
+    margin-bottom: 40px;
+  }
+  
+  /* ==================== Cartes Succès ==================== */
+  .card-succes {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ffbf00;
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 0 10px rgba(255, 191, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .card-succes:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 191, 0, 0.6);
+  }
+  
+  .card-succes img {
     width: 100%;
     height: auto;
+    border-radius: 8px;
+    border-bottom: 2px solid #ffbf00;
+    image-rendering: pixelated;
   }
-
-  .card-content {
-    padding: 15px;
+  
+  .card-succes .card-title {
+    font-size: 1.4rem;
+    color: #ffbf00;
+    margin-top: 15px;
+    text-shadow: 0 0 4px #ffbf00aa;
   }
-
-  .card-title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+  
+  .card-succes .card-text {
+    font-size: 1rem;
+    color: #ddd;
+    margin: 10px 0 15px;
   }
-
-  .card-description {
-    font-size: 1em;
-    color: #555;
+  
+  .card-succes iframe {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    transition: transform 0.3s;
   }
+  
+  .card-succes iframe:hover {
+    transform: scale(1.05);
+  }
+  
