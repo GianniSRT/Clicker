@@ -68,7 +68,7 @@ function changeCharacter() {
     } else if (currentCharacter === omenImage || currentCharacter === skyeImage) {
         agentImage.style.transform = "scale(1)";  // Taille normale pour Omen et Skye
     } else if (currentCharacter === neonImage) {
-        agentImage.style.transform = "scale(1.3)";  // Agrandir Neon légèrement
+        agentImage.style.transform = "scale(1.1)";  // Agrandir Neon légèrement
     } else {
         agentImage.style.transform = "scale(1)";  // Taille normale pour Jett
     }

@@ -1,107 +1,145 @@
-/* Mise en page de base */
+/* ==================== Mise en page de base ==================== */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     background-image: url(assets/background.jpg);
-    background-size: cover; /* Image de fond qui couvre toute la page */
+    background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
-    cursor: url('assets/crosshair.png') 32 32, crosshair; /* Curseur personnalisé */
+    cursor: url('assets/crosshair.png') 32 32, crosshair;
 }
 
 main {
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
 }
 
-
-
-
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* ==================== Navbar améliorée ==================== */
+.navbar {
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease;
+    z-index: 1000;
 }
 
-.content {
-    padding: 20px;
-    transition: margin-left 0.3s;
+.navbar-brand {
+    font-size: 1.6rem;
+    color: white !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    transition: text-shadow 0.3s ease;
 }
 
-.content.shifted {
-    margin-left: 250px;
+.navbar-brand:hover {
+    text-shadow: 0 0 8px #ffbf00cc;
 }
 
+.navbar-nav .nav-link {
+    position: relative;
+    font-size: 1.1rem;
+    color: white !important;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.4s ease;
+}
 
-/* Style des agents */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 15%;
+    width: 70%;
+    height: 2px;
+    background-color: #ffbf00;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffbf00 !important;
+    background-color: rgba(255, 191, 0, 0.1);
+    border-radius: 6px;
+    transform: scale(1.05);
+    text-shadow: 0 0 5px #ffbf00aa;
+}
+
+.navbar-nav .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar-nav .nav-link.active {
+    color: #ffbf00 !important;
+    font-weight: bold;
+    text-shadow: 0 0 6px #ffbf00cc;
+}
+
+.navbar-nav .nav-item {
+    padding: 0 15px;
+}
+
+.navbar-toggler {
+    border-color: white !important;
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggler:hover {
+    transform: rotate(90deg);
+}
+
+.navbar-toggler-icon {
+    background-color: white !important;
+}
+
+/* ==================== Agents ==================== */
 .agents-container {
     position: fixed;
-    margin-top: 270px;
-    margin-left: 420px;
+    margin-top: 285px;
+    margin-left: 70px;
     display: flex;
     justify-content: right;
     position: relative;
     width: 70%;
     height: 250px;
 }
-.agent-card {
-    width: 200px;
-    height: 300px;
-    margin: 10px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-/* Affichage du score de monnaie */
-#currencyDisplay {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    margin-top: 50px;
-    align-items: center;
-    background-color: rgba(0,0,0,0.6);
-    padding: 10px 15px;
-    border-radius: 10px;
-    color: white;
-    font-size: 22px;
-    z-index: 1001;
+
+.agent {
+    max-width: 300px;
+    max-height: 450px;
+    object-fit: contain;
+    cursor: url('assets/crosshair.png') 32 32, crosshair;
 }
 
-.money-icon {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-    image-rendering: auto;
-    filter: drop-shadow(0 0 5px gold);
-    animation: pulse 1.2s infinite;
+.agent[src*="Chamber"] {
+    max-width: 200px;
+    max-height: 300px;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
+.agent[src*="Jett"] {
+    max-width: 350px;
+    max-height: 500px;
+    margin-top: 20px;
 }
-/* Barre de vie pixel style */
+
+/* ==================== Barre de vie pixel style ==================== */
 .pixel-health-bar-container {
-    position: fixed;
-    top: 50%;
-    left: 50.5%; /* très léger décalage à droite */
-    transform: translate(-50%, -50%);
+    position: absolute;
+    top: -0.1px;
+    left: 40%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -130,4 +168,35 @@ main {
     width: 100%;
     background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
     transition: width 0.2s ease;
+}
+
+/* ==================== Monnaie / Score ==================== */
+#currencyDisplay {
+    position: fixed;
+    top: 90px; /* abaissé légèrement */
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px 15px;
+    border-radius: 10px;
+    color: white;
+    font-size: 22px;
+    z-index: 1001;
+}
+
+
+.money-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    image-rendering: auto;
+    filter: drop-shadow(0 0 5px gold);
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
 }
