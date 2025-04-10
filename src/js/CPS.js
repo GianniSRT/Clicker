@@ -8,13 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Récupérer les crédits depuis le localStorage ou initialiser à 1000 (comme dans ameliorations.js)
     let credits = parseInt(localStorage.getItem('credits')) || 1000;
-
-    // Afficher les crédits au chargement de la page
-    updateCreditsDisplay();
-
-    // Fonction pour mettre à jour l'affichage des crédits (identique à celle dans ameliorations.js)
     function updateCreditsDisplay() {
         scoreDisplay.innerHTML = `
             <div class="score-container d-flex align-items-center text-light">
@@ -23,48 +17,78 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
         `;
     }
-
-    // Fonction pour sauvegarder les crédits (identique à celle dans ameliorations.js)
     function saveCreditsToLocalStorage() {
         localStorage.setItem('credits', credits);
     }
+    updateCreditsDisplay();
 
-    // Fonction de clic sur Jett
-    jett.addEventListener('click', () => {
-        console.log('Jett a été cliqué');
-        credits++;  // Incrémente les crédits de 1
-        saveCreditsToLocalStorage();
-        updateCreditsDisplay();
-    });
+    let totalClicks = parseInt(localStorage.getItem('totalClicks')) || 0;
+    let unlockedSucces = JSON.parse(localStorage.getItem('unlockedSucces')) || [];
+    let clickTimestamps = [];
+    let currentStreak = 0;
+    let lastAgent = '';
+    let inactivityTimer = null;
+
+    function saveClicks() {
+        localStorage.setItem('totalClicks', totalClicks);
+        localStorage.setItem('unlockedSucces', JSON.stringify(unlockedSucces));
+    }
+
+    function showSuccesPopup(title) {
+        const popup = document.createElement('div');
+        popup.classList.add('modal', 'fade');
+        popup.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title">${title}</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Succès débloqué !</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(popup);
+        const bsModal = new bootstrap.Modal(popup);
+        bsModal.show();
+        popup.addEventListener('hidden.bs.modal', () => popup.remove());
+    }
+
+    function unlockSucces(key, title, reward = 50) {
+        if (!unlockedSucces.includes(key)) {
+            unlockedSucces.push(key);
+            credits += reward;
+            showSuccesPopup(`${title} (+${reward} crédits)`);
+            saveCreditsToLocalStorage();
+            saveClicks();
+            updateCreditsDisplay();
+        }
+    }
 
     let health = 100;
     const pixelHealthFill = document.getElementById("pixel-health-fill");
     const agentImage = document.querySelector(".agent");
 
-    // ... (le reste du code existant reste inchangé)
-    const jettImage = 'assets/Jett.gif';
-    const neonImage = 'assets/Neon.gif';
-    const chamberImage = 'assets/Chamber.gif';
-    const omenImage = 'assets/Omen.gif';
-    const skyeImage = 'assets/Skye.gif';
-
-    const characters = [jettImage, chamberImage, neonImage, omenImage, skyeImage];
+    const characters = [
+        'assets/Jett.gif',
+        'assets/Chamber.gif',
+        'assets/Neon.gif',
+        'assets/Omen.gif',
+        'assets/Skye.gif'
+    ];
     let currentCharacterIndex = 0;
     let chamberOffsetX = 7;
-
-    agentImage.src = jettImage;
-    agentImage.style.transform = "scale(1)";
 
     function changeCharacter() {
         currentCharacterIndex = (currentCharacterIndex + 1) % characters.length;
         const currentCharacter = characters[currentCharacterIndex];
         agentImage.src = currentCharacter;
 
-        if (currentCharacter === chamberImage) {
+        if (currentCharacter.includes("Chamber")) {
             agentImage.style.transform = `scale(1) translateX(${chamberOffsetX}px)`;
-        } else if (currentCharacter === omenImage || currentCharacter === skyeImage) {
-            agentImage.style.transform = "scale(1)";
-        } else if (currentCharacter === neonImage) {
+        } else if (currentCharacter.includes("Neon")) {
             agentImage.style.transform = "scale(1.1)";
         } else {
             agentImage.style.transform = "scale(1)";
@@ -78,13 +102,44 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         e.stopPropagation();
 
+        totalClicks++;
+        if (totalClicks === 1) unlockSucces("premier", "Premier tir");
+
+        const now = Date.now();
+        clickTimestamps.push(now);
+        clickTimestamps = clickTimestamps.filter(ts => now - ts < 5000);
+        if (clickTimestamps.length >= 10) unlockSucces("eco", "Eco Round?");
+
+        if (health <= 5) unlockSucces("clutch", "Clutch");
+
         if (health > 0) {
             health -= 5;
             pixelHealthFill.style.width = health + "%";
         }
 
         if (health <= 0) {
+            if (agentImage.src.includes("Jett")) unlockSucces("jett", "Jett-diff");
+
+            if (lastAgent !== agentImage.src) {
+                currentStreak++;
+                lastAgent = agentImage.src;
+            }
+
+            if (currentStreak >= 5) unlockSucces("ace", "Ace");
+
             changeCharacter();
         }
+
+        if (agentImage.src.includes("Chamber")) {
+            if (inactivityTimer) clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(() => {
+                unlockSucces("afk", "Afk Chamber");
+            }, 10000);
+        }
+
+        credits++;
+        saveCreditsToLocalStorage();
+        saveClicks();
+        updateCreditsDisplay();
     });
 });
