@@ -1,63 +1,44 @@
-<h1>🌌 Clicker Galactique – Jeu Incrémental </h1>
-Bienvenue dans Clicker Galactique, un jeu de clic addictif où vous incarnez un capitaine d’exploration spatiale à la conquête des ressources de l’univers ! 🌠
+🎯 Valorant Clicker – Jeu Incrémental
+Bienvenue dans Valorant Clicker, un jeu de clic addictif où vous incarnez un agent de Valorant à la recherche de gloire et de victoire ! 💥
 
 🚀 Concept du jeu
-Le joueur débute avec un simple clic et gagne 1 point par interaction. Ces points peuvent être utilisés pour acheter des éléments (robots, extracteurs, stations spatiales…) qui génèrent des points automatiquement ou augmentent les gains par clic. Plus vous progressez, plus vos revenus deviennent exponentiels !
-
-🪐 Univers
-Explorez une galaxie mystérieuse et collectez des ressources stellaires !
-Chaque planète que vous débloquez offre de nouvelles ressources et possibilités d’amélioration.
+Le joueur débute avec un simple clic pour accumuler des crédits, qui peuvent ensuite être utilisés pour acheter des améliorations comme des agents, des armes, et des équipements pour générer des crédits automatiquement. Plus vous progressez, plus vos revenus augmentent exponentiellement !
 
 🎮 Fonctionnalités principales
-Clic = points : chaque clic rapporte des points.
+Clic = Crédits : chaque clic rapporte des crédits pour améliorer votre progression.
 
-Progression : les points permettent d’acheter des éléments productifs.
+Progression : les crédits permettent d'acheter des agents et des équipements qui augmentent votre production de crédits.
 
-Production automatique : les éléments produisent des ressources en continu.
+Production automatique : certains éléments génèrent des crédits automatiquement après un certain temps.
 
-Boutique : achetez éléments et bonus pour accélérer votre progression.
+Boutique : achetez des agents, des armes et des améliorations pour accélérer votre progression.
 
-Décor interactif : cliquez sur des zones du décor pour collecter différentes ressources (métal, énergie, cristaux…).
+Agents uniques : chaque agent de Valorant possède une capacité spéciale qui peut influencer votre gameplay (augmentation de la production de crédits, réduction du coût des améliorations, etc.).
 
-Évolution exponentielle : vos revenus grandissent de manière quasi exponentielle.
-
-Sauvegarde automatique : l’état de la partie est sauvegardé régulièrement dans le localStorage pour ne rien perdre en cas de coupure.
+Sauvegarde automatique : votre progression est sauvegardée dans le localStorage du navigateur pour que vous ne perdiez pas vos données en cas de coupure ou de fermeture du jeu.
 
 🛍️ La Boutique
-Deux catégories d’objets :
+Deux catégories d'objets :
 
-Éléments : générateurs de ressources (clic ou idle).
+Agents : vous permet de débloquer de nouveaux agents qui augmentent votre production de crédits. Par exemple, Jett génère plus de crédits à chaque clic, tandis que Neon augmente les revenus passifs.
 
-Bonus : améliorent la puissance des éléments existants.
-
-Chaque achat augmente le prix des éléments suivants, rendant leur acquisition plus stratégique.
+Améliorations : des équipements et des capacités qui boostent l'efficacité de vos agents, comme des armes plus puissantes et des équipements de haute technologie.
 
 💾 Sauvegarde
 Votre progression est sauvegardée automatiquement via le localStorage du navigateur. Vous pouvez fermer et rouvrir le jeu à tout moment sans perdre vos données.
 
-🔧 Technologies utilisées
+🛠️ Technologies utilisées
 HTML / CSS / JavaScript
 
 Sauvegarde : localStorage
 
 Interface : Responsive et minimaliste
 
-Optionnel : Utilisation de bibliothèques comme React ou Vue si projet étendu
+Optionnel : Utilisation de bibliothèques comme React ou Vue si le projet est étendu.
 
 📈 Exemple d'évolution
 Temps approximatif	Gain par clic
-Début	1
-1 minute	3
-1 heure	1 000
-1 jour	1 000 000
-📦 Installation locale
-Clonez ce dépôt :
-
-bash
-Copier
-Modifier
-git clone https://github.com/votre-utilisateur/clicker-galactique.git
-Ouvrez index.html dans votre navigateur préféré.
-
-⚠️ Pas besoin de serveur ou de base de données, tout fonctionne côté client !
-
+Début	1 crédit
+1 minute	3 crédits
+1 heure	1 000 crédits
+1 jour	1 000 000 crédits
