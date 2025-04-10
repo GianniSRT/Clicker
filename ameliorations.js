@@ -169,3 +169,18 @@ fetch('data.json')
         });
     })
     .catch(error => console.error('Erreur lors du chargement des données :', error));
+
+window.updateClickMultiplier = function updateClickMultiplier() {
+    const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+    let totalMultiplier = 1;
+
+    ['agents', 'armes', 'competences'].forEach(category => {
+        if (ameliorations[category]) {
+            ameliorations[category].forEach(item => {
+                totalMultiplier += (item.nombre_achat || 0) * (item.multiplicateur || 1);
+            });
+        }
+    });
+
+    console.log(`Nouveau multiplicateur de clic : ${totalMultiplier}`);
+};
