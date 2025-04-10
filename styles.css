@@ -96,3 +96,38 @@ main {
     50% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
+/* Barre de vie pixel style */
+.pixel-health-bar-container {
+    position: fixed;
+    top: 50%;
+    left: 50.5%; /* très léger décalage à droite */
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.pixel-heart {
+    width: 20px;
+    height: 20px;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 0 2px red);
+}
+
+.pixel-health-bar {
+    width: 140px;
+    height: 12px;
+    background-color: #222;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 0 3px #ff0000aa;
+}
+
+#pixel-health-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+    transition: width 0.2s ease;
+}

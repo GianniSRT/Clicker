@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">Stand de tir</a>
             <a class="navbar-brand" href="ameliorations.html">Boutique</a>
@@ -28,16 +28,21 @@
 
         <!-- Contenu principal -->
         <div class="content flex-grow-1" id="mainContent">
-
             <div class="agents-container">
-                <!-- Jett à gauche -->
-                <img src="assets/Jett.gif" alt="Jett" class="agent jett">  <!-- L'image Jett -->
-                   
-                <!-- Affichage du score de monnaie -->
-                <div id="currencyDisplay">
-                    <img src="assets/money.webp" alt="money" class="money-icon">
-                    <span id="score">0</span>
+                <!-- Jett au milieu -->
+                <img src="assets/Jett.gif" alt="Jett" class="agent jett" draggable="false">
+
+                <!-- Barre de vie style pixel avec cœur -->
+                <div class="pixel-health-bar-container">
+                    <img src="assets/pixel-heart.gif" alt="Heart" class="pixel-heart">
+                    <div class="pixel-health-bar">
+                        <div id="pixel-health-fill"></div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Affichage du score de monnaie (Supprimé l'élément de score visible) -->
+            <div id="currencyDisplay">
             </div>
         </div>
     </main>
