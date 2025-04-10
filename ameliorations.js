@@ -35,20 +35,31 @@ function saveItemToLocalStorage(item) {
     localStorage.setItem('ameliorations', JSON.stringify(ameliorations));
 }
 
-// Fonction pour gérer l'achat
+// Fonction pour obtenir les crédits actuels
+function getCredits() {
+    return parseInt(localStorage.getItem('credits')) || 0;
+}
+
+// Fonction pour définir les crédits
+function setCredits(value) {
+    credits = value;
+    saveCreditsToLocalStorage();
+    updateCreditsDisplay();
+}
+
+// Appliquer le multiplicateur lors de l'achat
 function handlePurchase(item, btn, textElement) {
-    if (credits >= item.prix) {
-        credits -= item.prix;
-        saveCreditsToLocalStorage();
+    const currentCredits = getCredits();
+    if (currentCredits >= item.prix) {
+        setCredits(currentCredits - item.prix);
 
         item.nombre_achat += 1;
-        item.prix = Math.ceil(item.prix * 1.2);
+        item.prix = Math.ceil(item.prix * (item.multiplicateur || 1.2));
 
         saveItemToLocalStorage(item);
 
+        updateClickMultiplier(); // Met à jour le multiplicateur
         textElement.textContent = `${item.nom} - ${item.prix} pts ${item.nombre_achat}`;
-        updateCreditsDisplay();
-
         console.log(`${item.nom} acheté ! Nombre d'achats : ${item.nombre_achat}`);
     } else {
         alert('Crédits insuffisants !');
