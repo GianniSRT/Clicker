@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
     rankDisplay.style.borderRadius = "10px";
     rankDisplay.style.boxShadow = "0 0 10px rgba(255, 70, 85, 0.8)";
     rankDisplay.style.fontSize = "1.2rem";
-    rankDisplay.textContent = `Rang : ${currentRank}`;
     document.body.appendChild(rankDisplay);
 
     // === CRÉER LA CARTE DES RANGS ===
@@ -206,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             }
         }
-        rankDisplay.textContent = `Rang : ${currentRank}`;
     }
 
     // === METTRE À JOUR LA BARRE DE PROGRESSION ===
@@ -307,76 +305,106 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // === BONUS ORB ===
-    function spawnBonusOrb() {
+    function spawnBonusOrbs(count = 3) { // Nombre d'orbes à faire apparaître
         if (bonusOrbActive) return;
 
         bonusOrbActive = true;
 
-        const orb = document.createElement('div');
-        orb.classList.add('bonus-orb');
-        orb.setAttribute('id', 'bonus-orb');
+        for (let i = 0; i < count; i++) {
+            const orb = document.createElement('div');
+            orb.classList.add('bonus-orb');
+            orb.setAttribute('id', `bonus-orb-${i}`);
 
-        const randomPosition = () => {
-            const xPos = Math.random() * (window.innerWidth - 80) + window.innerWidth / 4;
-            const yPos = Math.random() * (window.innerHeight - 80) + window.innerHeight / 4;
-            orb.style.top = `${yPos}px`;
-            orb.style.left = `${xPos}px`;
-        };
+            const randomPosition = () => {
+                const xPos = Math.random() * (window.innerWidth - 100); // Position X aléatoire
+                const yPos = Math.random() * (window.innerHeight - 100); // Position Y aléatoire
+                orb.style.top = `${yPos}px`;
+                orb.style.left = `${xPos}px`;
+            };
 
-        orb.style.position = 'absolute';
-        orb.style.transition = 'all 0.5s ease';
-        randomPosition();
-
-        // Taille réduite et surposition au-dessus des autres éléments
-        orb.style.width = "50px";  // Taille de l'orbe plus petite
-        orb.style.height = "50px"; // Taille de l'orbe plus petite
-        orb.style.pointerEvents = 'auto'; // Permet le clic sur l'orbe
-
-        // Curseur personnalisé lorsque survol de l'orbe
-        orb.addEventListener('mouseover', () => {
-            document.body.style.cursor = 'url("assets/crosshair.png"), auto';  // Curseur crosshair
-        });
-
-        orb.addEventListener('mouseout', () => {
-            document.body.style.cursor = 'auto';  // Retour à curseur normal
-        });
-
-        orb.addEventListener('click', () => {
-            // Ajout des points en fonction du niveau
-            let rewardPoints = 0;
-
-            if (credits < 1000) {
-                rewardPoints = 50;  // Bronze
-            } else if (credits < 5000) {
-                rewardPoints = 100;  // Argent
-            } else if (credits < 10000) {
-                rewardPoints = 200;  // Or
-            } else {
-                rewardPoints = 500;  // Diamant
-            }
-
-            credits += rewardPoints;
-            updateCreditsDisplay();
-
-            // Déplacement rapide avant disparition
+            // Style de l'orbe
+            orb.style.position = 'absolute';
+            orb.style.transition = 'all 0.5s ease';
+            orb.style.width = "80px"; // Taille de la hitbox (plus grande)
+            orb.style.height = "80px"; // Taille de la hitbox (plus grande)
+            orb.style.backgroundColor = "transparent"; // Fond transparent pour la hitbox
+            orb.style.borderRadius = "50%"; // Forme circulaire
+            orb.style.cursor = 'pointer'; // Curseur pointer pour indiquer qu'il est cliquable
+            orb.style.transform = "translate(-50%, -50%)"; // Recentre la hitbox
             randomPosition();
+
+            // Ajouter un élément enfant pour l'apparence visuelle de l'orbe
+            const orbVisual = document.createElement('div');
+            orbVisual.style.width = "50px"; // Taille visible de l'orbe
+            orbVisual.style.height = "50px"; // Taille visible de l'orbe
+            orbVisual.style.backgroundColor = "#ff4655"; // Couleur rouge Valorant
+            orbVisual.style.borderRadius = "50%"; // Forme circulaire
+            orbVisual.style.boxShadow = "0 0 15px rgba(255, 70, 85, 0.8)";
+            orbVisual.style.position = "absolute";
+            orbVisual.style.top = "50%";
+            orbVisual.style.left = "50%";
+            orbVisual.style.transform = "translate(-50%, -50%)"; // Recentre l'apparence visuelle
+
+            // Ajouter un logo d'œil à l'intérieur de l'orbe
+            const eyeLogo = document.createElement('img');
+            eyeLogo.src = "assets/reyna-oeil.png"; // Chemin vers l'image du logo d'œil
+            eyeLogo.alt = "Eye Logo";
+            eyeLogo.style.width = "30px";
+            eyeLogo.style.height = "30px";
+            eyeLogo.style.position = "absolute";
+            eyeLogo.style.top = "50%";
+            eyeLogo.style.left = "50%";
+            eyeLogo.style.transform = "translate(-50%, -50%)"; // Centrer le logo
+            orbVisual.appendChild(eyeLogo);
+
+            orb.appendChild(orbVisual);
+
+            // Ajouter un événement de clic sur l'orbe
+            orb.addEventListener('click', () => {
+                const rewardPoints = Math.floor(Math.random() * 50) + 10; // Récompense aléatoire entre 10 et 50
+                credits += rewardPoints;
+                updateCreditsDisplay();
+
+                // Afficher "+X" après le clic
+                const rewardText = document.createElement('div');
+                rewardText.textContent = `+${rewardPoints}`;
+                rewardText.style.position = 'absolute';
+                rewardText.style.top = orb.style.top;
+                rewardText.style.left = orb.style.left;
+                rewardText.style.transform = "translate(-50%, -50%)";
+                rewardText.style.color = "#ff4655";
+                rewardText.style.fontSize = "1.5rem";
+                rewardText.style.fontWeight = "bold";
+                rewardText.style.textShadow = "0 0 10px rgba(255, 70, 85, 0.8)";
+                rewardText.style.animation = "fadeOut 1s ease forwards";
+                document.body.appendChild(rewardText);
+
+                // Supprimer le texte après l'animation
+                setTimeout(() => rewardText.remove(), 1000);
+
+                // Déplacement rapide avant disparition
+                orb.style.transform = "scale(1.5)"; // Animation d'agrandissement
+                setTimeout(() => {
+                    orb.remove();
+                }, 200); // Disparition rapide
+            });
+
+            // Ajouter l'orbe au DOM
+            document.body.appendChild(orb);
+
+            // Disparition automatique si non cliqué
             setTimeout(() => {
-                orb.remove();
-                bonusOrbActive = false;
-                setTimeout(spawnBonusOrb, Math.random() * 10000 + 5000); // Réapparition rapide
-            }, 200);  // Disparition plus rapide
-        });
+                if (orb && orb.parentElement) {
+                    orb.remove();
+                }
+            }, 5000); // Temps avant disparition
+        }
 
-        document.getElementById('overlay').appendChild(orb);
-
-        // Disparition normale si non cliqué
+        // Réapparition des orbes après un délai aléatoire
         setTimeout(() => {
-            if (orb && orb.parentElement) {
-                orb.remove();
-                bonusOrbActive = false;
-                setTimeout(spawnBonusOrb, Math.random() * 10000 + 5000); // Réapparition rapide
-            }
-        }, 3000);  // Temps réduit avant disparition
+            bonusOrbActive = false;
+            spawnBonusOrbs(count); // Réapparition des orbes
+        }, Math.random() * 10000 + 5000); // Intervalle aléatoire entre 5 et 15 secondes
     }
 
     // === INIT ===
@@ -385,4 +413,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateRank(); // Mettre à jour le rang au chargement
     updateRankProgress(); // Mettre à jour la barre de progression au chargement
     startAutoClickers(); // Démarrer les clics automatiques
+
+    // === INIT BONUS ORBS ===
+    spawnBonusOrbs(5); // Faire apparaître 5 orbes
 });
