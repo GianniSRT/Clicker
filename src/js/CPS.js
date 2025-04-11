@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Charger la musique de fond
+    const backgroundMusic = new Audio('assets/mp3/theme.mp3');
+    backgroundMusic.loop = true; // Répéter la musique en boucle
+    backgroundMusic.volume = 0.5; // Régler le volume (0.0 à 1.0)
+    backgroundMusic.play().catch(error => {
+        console.warn("La musique de fond n'a pas pu être jouée automatiquement :", error);
+    });
+
+    // Ajouter un bouton pour activer/désactiver la musique (optionnel)
+    const musicToggleButton = document.createElement('button');
+    musicToggleButton.textContent = "🎵 Activer/Désactiver la musique";
+    musicToggleButton.className = "btn btn-secondary position-fixed bottom-0 end-0 m-3";
+    document.body.appendChild(musicToggleButton);
+
+    let isMusicPlaying = true;
+    musicToggleButton.addEventListener('click', () => {
+        if (isMusicPlaying) {
+            backgroundMusic.pause();
+            musicToggleButton.textContent = "🎵 Activer la musique";
+        } else {
+            backgroundMusic.play();
+            musicToggleButton.textContent = "🎵 Désactiver la musique";
+        }
+        isMusicPlaying = !isMusicPlaying;
+    });
+
     const jett = document.querySelector('.agent.jett');
     const agentImage = document.querySelector('.agent');
     const scoreDisplay = document.getElementById('currencyDisplay');
@@ -29,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
     let currentCharacterIndex = 0;
     const chamberOffsetX = 7;
+
+    // Ajouter une instance Audio pour le son de clic
+    const clickSound = new Audio('assets/mp3/click.mp3');
 
     // === UI UPDATE FUNCTIONS ===
     function updateCreditsDisplay() {
@@ -137,6 +166,10 @@ document.addEventListener('DOMContentLoaded', function () {
     agentImage.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
+
+        // Jouer le son de clic
+        clickSound.currentTime = 0; // Réinitialise le son pour qu'il puisse être rejoué rapidement
+        clickSound.play();
 
         totalClicks++;
         if (totalClicks === 1) unlockSucces("premier", "Premier tir");
