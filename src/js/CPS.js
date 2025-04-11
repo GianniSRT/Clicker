@@ -114,6 +114,25 @@ document.addEventListener('DOMContentLoaded', function () {
         pixelHealthFill.style.width = health + "%";
     }
 
+    // Fonction pour démarrer les clics automatiques des agents
+    function startAutoClickers() {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        const agents = ameliorations.agents || [];
+
+        agents.forEach(agent => {
+            if (agent.nombre_achat > 0) {
+                setInterval(() => {
+                    // Calcul du gain automatique : nombre d'agents * multiplicateur
+                    const gain = agent.nombre_achat * (agent.multiplicateur || 1);
+                    credits += gain;
+                    saveCreditsToLocalStorage();
+                    updateCreditsDisplay();
+                    console.log(`Gain automatique de ${gain} crédits grâce à ${agent.nom} (${agent.nombre_achat} agents, multiplicateur : ${agent.multiplicateur || 1})`);
+                }, 1000); // Intervalle de 1 seconde
+            }
+        });
+    }
+
     // === EVENT ===
     agentImage.addEventListener("click", (e) => {
         e.preventDefault();
@@ -165,4 +184,5 @@ document.addEventListener('DOMContentLoaded', function () {
     // === INIT ===
     updateClickMultiplier();
     updateCreditsDisplay();
+    startAutoClickers(); // Démarrer les clics automatiques
 });
