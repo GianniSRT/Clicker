@@ -68,19 +68,23 @@ function handlePurchase(item, btn, textElement) {
 
 // Fonction pour démarrer les clics automatiques des agents
 function startAutoClickers() {
-    const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
-    const agents = ameliorations.agents || [];
+    setInterval(() => {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        const agents = ameliorations.agents || [];
+        let totalGain = 0;
 
-    agents.forEach(agent => {
-        if (agent.nombre_achat > 0) {
-            setInterval(() => {
+        agents.forEach(agent => {
+            if (agent.nombre_achat > 0) {
                 // Calcul du gain automatique : nombre d'agents * multiplicateur
-                const gain = agent.nombre_achat * (agent.multiplicateur || 1);
-                setCredits(getCredits() + gain);
-                console.log(`Gain automatique de ${gain} crédits grâce à ${agent.nom} (${agent.nombre_achat} agents, multiplicateur : ${agent.multiplicateur || 1})`);
-            }, 1000); // Intervalle de 1 seconde
+                totalGain += agent.nombre_achat * (agent.multiplicateur || 1);
+            }
+        });
+
+        if (totalGain > 0) {
+            setCredits(getCredits() + totalGain);
+            console.log(`Gain automatique total : ${totalGain} crédits grâce aux agents.`);
         }
-    });
+    }, 1000); // Intervalle de 1 seconde
 }
 
 // Charger les données et initialiser les éléments

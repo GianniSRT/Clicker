@@ -43,30 +43,32 @@
     
         <!-- Contenu principal -->
         <div class="content" id="mainContent">
-        
-                <div class="d-flex flex-row justify-content-between gap-4 flex-wrap">
-                    <div class="card bg-dark p-3 flex-fill">
-                        <h2 class="text-light">Agents</h2>
-                        <hr class="line text-light">
-                        <button id="liste-agents" class="list-group bg-dark"></button>
-                    </div>
-                    
-                    <div class="card bg-dark p-3 flex-fill">
-                        <h2 class="text-light">Armes</h2>
-                        <hr class="line text-light">
-                        <button id="liste-armes" class="list-group bg-dark"></button>
-                    </div>
-                    
-                    <div class="card bg-dark p-3 flex-fill">
-                        <h2 class="text-light">Compétences</h2>
-                        <hr class="line text-light">
-                        <button id="liste-competences" class="list-group bg-dark"></button>
-                    </div>
+            <div class="d-flex flex-row justify-content-between gap-4 flex-wrap">
+                <!-- Agents -->
+                <div class="card bg-dark p-3 flex-fill valorant-card">
+                    <h2 class="text-light text-center">Agents</h2>
+                    <hr class="line text-light">
+                    <div id="liste-agents" class="list-group bg-dark"></div>
+                </div>
+
+                <!-- Armes -->
+                <div class="card bg-dark p-3 flex-fill valorant-card">
+                    <h2 class="text-light text-center">Armes</h2>
+                    <hr class="line text-light">
+                    <div id="liste-armes" class="list-group bg-dark"></div>
+                </div>
+
+                <!-- Compétences -->
+                <div class="card bg-dark p-3 flex-fill valorant-card">
+                    <h2 class="text-light text-center">Compétences</h2>
+                    <hr class="line text-light">
+                    <div id="liste-competences" class="list-group bg-dark"></div>
                 </div>
             </div>
-            <!-- Affichage du score de monnaie (Supprimé l'élément de score visible) -->
-            <div id="currencyDisplay"></div>
         </div>
+        
+        <!-- Affichage du score de monnaie (Supprimé l'élément de score visible) -->
+        <div id="currencyDisplay"></div>
     </main>
 
     <!-- Bootstrap JS + Popper -->
