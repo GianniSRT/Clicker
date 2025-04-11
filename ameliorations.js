@@ -66,6 +66,27 @@ function handlePurchase(item, btn, textElement) {
     }
 }
 
+// Fonction pour démarrer les clics automatiques des agents
+function startAutoClickers() {
+    setInterval(() => {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        const agents = ameliorations.agents || [];
+        let totalGain = 0;
+
+        agents.forEach(agent => {
+            if (agent.nombre_achat > 0) {
+                // Calcul du gain automatique : nombre d'agents * multiplicateur
+                totalGain += agent.nombre_achat * (agent.multiplicateur || 1);
+            }
+        });
+
+        if (totalGain > 0) {
+            setCredits(getCredits() + totalGain);
+            console.log(`Gain automatique total : ${totalGain} crédits grâce aux agents.`);
+        }
+    }, 1000); // Intervalle de 1 seconde
+}
+
 // Charger les données et initialiser les éléments
 fetch('data.json')
     .then(response => response.json())
@@ -107,6 +128,9 @@ fetch('data.json')
 
             btn.addEventListener('click', () => handlePurchase(agent, btn, text));
         });
+
+        // Démarrer les clics automatiques pour les agents
+        startAutoClickers();
 
         // Armes
         data.ameliorations.armes.forEach(arme => {

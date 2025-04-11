@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Charger la musique de fond
+    const backgroundMusic = new Audio('assets/mp3/theme.mp3');
+    backgroundMusic.loop = true; // Répéter la musique en boucle
+    backgroundMusic.volume = 0.5; // Régler le volume (0.0 à 1.0)
+    backgroundMusic.play().catch(error => {
+        console.warn("La musique de fond n'a pas pu être jouée automatiquement :", error);
+    });
+
+    // Ajouter un bouton pour activer/désactiver la musique (optionnel)
+    const musicToggleButton = document.createElement('button');
+    musicToggleButton.textContent = "🎵 Activer/Désactiver la musique";
+    musicToggleButton.className = "btn btn-secondary position-fixed bottom-0 end-0 m-3";
+    document.body.appendChild(musicToggleButton);
+
+    let isMusicPlaying = true;
+    musicToggleButton.addEventListener('click', () => {
+        if (isMusicPlaying) {
+            backgroundMusic.pause();
+            musicToggleButton.textContent = "🎵 Activer la musique";
+        } else {
+            backgroundMusic.play();
+            musicToggleButton.textContent = "🎵 Désactiver la musique";
+        }
+        isMusicPlaying = !isMusicPlaying;
+    });
+
     const jett = document.querySelector('.agent.jett');
     const agentImage = document.querySelector('.agent');
     const scoreDisplay = document.getElementById('currencyDisplay');
@@ -30,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
     let currentCharacterIndex = 0;
     const chamberOffsetX = 7;
+
+    // Ajouter une instance Audio pour le son de clic
+    const clickSound = new Audio('assets/mp3/click.mp3');
 
     // === UI & LOCALSTORAGE ===
     function updateCreditsDisplay() {
@@ -115,10 +144,33 @@ document.addEventListener('DOMContentLoaded', function () {
         pixelHealthFill.style.width = health + "%";
     }
 
+    // Fonction pour démarrer les clics automatiques des agents
+    function startAutoClickers() {
+        const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
+        const agents = ameliorations.agents || [];
+
+        agents.forEach(agent => {
+            if (agent.nombre_achat > 0) {
+                setInterval(() => {
+                    // Calcul du gain automatique : nombre d'agents * multiplicateur
+                    const gain = agent.nombre_achat * (agent.multiplicateur || 1);
+                    credits += gain;
+                    saveCreditsToLocalStorage();
+                    updateCreditsDisplay();
+                    console.log(`Gain automatique de ${gain} crédits grâce à ${agent.nom} (${agent.nombre_achat} agents, multiplicateur : ${agent.multiplicateur || 1})`);
+                }, 1000); // Intervalle de 1 seconde
+            }
+        });
+    }
+
     // === AGENT CLICK EVENT ===
     agentImage.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
+
+        // Jouer le son de clic
+        clickSound.currentTime = 0; // Réinitialise le son pour qu'il puisse être rejoué rapidement
+        clickSound.play();
 
         totalClicks++;
         if (totalClicks === 1) unlockSucces("premier", "Premier tir");
@@ -238,8 +290,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // === INIT ===
     updateClickMultiplier();
     updateCreditsDisplay();
-    spawnBonusOrb();
-
-    // Appliquer le crosshair uniquement sur l'orbe
-    document.body.style.cursor = "auto";  // Curseur normal globalement
 });
