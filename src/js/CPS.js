@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function showSuccesPopup(title) {
         const popup = document.createElement('div');
         popup.classList.add('modal', 'fade');
-        popup.innerHTML = `
+        popup.innerHTML = ` 
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content bg-dark text-white">
                     <div class="modal-header">

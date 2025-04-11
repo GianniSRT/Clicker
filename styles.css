@@ -28,8 +28,6 @@ main {
     z-index: 1000;
 }
 
-
-
 .navbar-brand {
     font-size: 1.6rem;
     color: white !important;
@@ -196,9 +194,7 @@ main {
     100% { transform: scale(1); }
 }
 
-<<<<<<< HEAD
-
-/* Carte des rangs */
+/* ==================== Carte des rangs ==================== */
 .rank-card {
     background: linear-gradient(135deg, #0f1923, #1c2533); /* Dégradé sombre */
     border: 2px solid #ff4655; /* Bordure rouge Valorant */
@@ -298,7 +294,6 @@ main {
     }
 }
 
-=======
 /* ==================== Orbe bonus ==================== */
 #overlay {
     position: fixed;
@@ -306,7 +301,7 @@ main {
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none;
+    pointer-events: none;  /* Aucun événement de souris sur l'overlay */
     z-index: 999;
 }
 
@@ -320,9 +315,10 @@ main {
     background-position: center;
     border-radius: 50%;
     cursor: pointer;
-    pointer-events: all;
+    pointer-events: all; /* Permet d'interagir avec l'orbe */
     z-index: 1000;
     animation: pulse-orb 0.8s infinite ease-in-out;  /* Animation de pulsation de l'orbe */
+    transition: transform 0.2s ease-in-out;
 }
 
 @keyframes pulse-orb {
@@ -346,4 +342,3 @@ main {
     box-shadow: 0 0 15px 4px rgba(185, 242, 255, 0.8);
     border: 2px solid #9bcdff;
 }
->>>>>>> 42bd9bd384e6202cf76b318616633bde8e60918a
