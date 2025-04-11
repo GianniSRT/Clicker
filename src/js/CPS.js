@@ -59,6 +59,60 @@ document.addEventListener('DOMContentLoaded', function () {
     // Ajouter une instance Audio pour le son de clic
     const clickSound = new Audio('assets/mp3/click.mp3');
 
+    // === LISTE DES RANGS ===
+    const ranks = [
+        { name: "Iron 1", clicks: 0 },
+        { name: "Iron 2", clicks: 100 },
+        { name: "Iron 3", clicks: 200 },
+        { name: "Bronze 1", clicks: 300 },
+        { name: "Bronze 2", clicks: 400 },
+        { name: "Bronze 3", clicks: 500 },
+        { name: "Silver 1", clicks: 700 },
+        { name: "Silver 2", clicks: 900 },
+        { name: "Silver 3", clicks: 1100 },
+        { name: "Gold 1", clicks: 1400 },
+        { name: "Gold 2", clicks: 1700 },
+        { name: "Gold 3", clicks: 2000 },
+        { name: "Platinum 1", clicks: 2500 },
+        { name: "Platinum 2", clicks: 3000 },
+        { name: "Platinum 3", clicks: 3500 },
+        { name: "Diamond 1", clicks: 4000 },
+        { name: "Diamond 2", clicks: 5000 },
+        { name: "Diamond 3", clicks: 6000 },
+        { name: "Immortal 1", clicks: 8000 },
+        { name: "Immortal 2", clicks: 10000 },
+        { name: "Immortal 3", clicks: 12000 },
+        { name: "Radiant", clicks: 15000 }
+    ];
+
+    let currentRank = "Iron 1"; // Rang initial
+
+    // === UI ELEMENTS ===
+    const rankDisplay = document.createElement('div');
+    rankDisplay.className = "rank-display position-fixed top-0 start-50 translate-middle-x mt-3 p-2 text-light";
+    rankDisplay.style.backgroundColor = "#1c2533";
+    rankDisplay.style.border = "2px solid #ff4655";
+    rankDisplay.style.borderRadius = "10px";
+    rankDisplay.style.boxShadow = "0 0 10px rgba(255, 70, 85, 0.8)";
+    rankDisplay.style.fontSize = "1.2rem";
+    rankDisplay.textContent = `Rang : ${currentRank}`;
+    document.body.appendChild(rankDisplay);
+
+    // === CRÉER LA CARTE DES RANGS ===
+    const rankCard = document.createElement('div');
+    rankCard.className = "rank-card position-fixed bottom-0 start-0 m-3 p-3 text-light";
+    rankCard.innerHTML = `
+        <h5 class="rank-title">Progression des Rangs</h5>
+        <div class="rank-info">
+            <span id="current-rank">${currentRank}</span>
+            <span id="next-rank">${ranks[1].name}</span>
+        </div>
+        <div class="progress rank-progress">
+            <div id="rank-progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    `;
+    document.body.appendChild(rankCard);
+
     // === UI UPDATE FUNCTIONS ===
     function updateCreditsDisplay() {
         scoreDisplay.innerHTML = `
@@ -143,6 +197,41 @@ document.addEventListener('DOMContentLoaded', function () {
         pixelHealthFill.style.width = health + "%";
     }
 
+    // === FONCTION POUR METTRE À JOUR LE RANG ===
+    function updateRank() {
+        for (let i = ranks.length - 1; i >= 0; i--) {
+            if (totalClicks >= ranks[i].clicks) {
+                currentRank = ranks[i].name;
+                break;
+            }
+        }
+        rankDisplay.textContent = `Rang : ${currentRank}`;
+    }
+
+    // === METTRE À JOUR LA BARRE DE PROGRESSION ===
+    function updateRankProgress() {
+        let currentRankIndex = 0;
+        for (let i = ranks.length - 1; i >= 0; i--) {
+            if (totalClicks >= ranks[i].clicks) {
+                currentRankIndex = i;
+                break;
+            }
+        }
+
+        const currentRank = ranks[currentRankIndex];
+        const nextRank = ranks[currentRankIndex + 1] || currentRank; // Si Radiant, pas de rang suivant
+        const progressToNextRank = nextRank.clicks - currentRank.clicks;
+        const clicksInCurrentRank = totalClicks - currentRank.clicks;
+        const progressPercentage = Math.min((clicksInCurrentRank / progressToNextRank) * 100, 100);
+
+        // Mettre à jour les éléments de la carte
+        document.getElementById('current-rank').textContent = currentRank.name;
+        document.getElementById('next-rank').textContent = nextRank.name;
+        const progressBar = document.getElementById('rank-progress-bar');
+        progressBar.style.width = `${progressPercentage}%`;
+        progressBar.setAttribute('aria-valuenow', progressPercentage);
+    }
+
     // Fonction pour démarrer les clics automatiques des agents
     function startAutoClickers() {
         const ameliorations = JSON.parse(localStorage.getItem('ameliorations')) || {};
@@ -172,6 +261,9 @@ document.addEventListener('DOMContentLoaded', function () {
         clickSound.play();
 
         totalClicks++;
+        updateRank(); // Mettre à jour le rang après chaque clic
+        updateRankProgress(); // Mettre à jour la barre de progression après chaque clic
+
         if (totalClicks === 1) unlockSucces("premier", "Premier tir");
 
         const now = Date.now();
@@ -217,5 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // === INIT ===
     updateClickMultiplier();
     updateCreditsDisplay();
+    updateRank(); // Mettre à jour le rang au chargement
+    updateRankProgress(); // Mettre à jour la barre de progression au chargement
     startAutoClickers(); // Démarrer les clics automatiques
 });

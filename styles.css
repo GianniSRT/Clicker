@@ -32,6 +32,8 @@ main {
     z-index: 1000;
 }
 
+
+
 .navbar-brand {
     font-size: 1.6rem;
     color: white !important;
@@ -200,3 +202,105 @@ main {
     50% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
+
+
+/* Carte des rangs */
+.rank-card {
+    background: linear-gradient(135deg, #0f1923, #1c2533); /* Dégradé sombre */
+    border: 2px solid #ff4655; /* Bordure rouge Valorant */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 70, 85, 0.8), 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 280px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rank-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 70, 85, 1), 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+/* Titre de la carte */
+.rank-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff4655;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Informations sur les rangs */
+.rank-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.rank-info span {
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Barre de progression */
+.rank-progress {
+    height: 25px;
+    background-color: #2a2f3a; /* Fond de la barre */
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.rank-progress .progress-bar {
+    background: linear-gradient(90deg, #ff4655, #ff7a85); /* Dégradé rouge */
+    height: 100%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 70, 85, 0.8);
+}
+
+/* Effet lumineux autour de la barre de progression */
+.rank-progress .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 70, 85, 0.5);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Animation subtile pour la carte */
+.rank-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 70, 85, 0.2), transparent 70%);
+    animation: pulse 3s infinite;
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+}
+
