@@ -311,93 +311,95 @@ document.addEventListener('DOMContentLoaded', function () {
         bonusOrbActive = true;
 
         for (let i = 0; i < count; i++) {
-            const orb = document.createElement('div');
-            orb.classList.add('bonus-orb');
-            orb.setAttribute('id', `bonus-orb-${i}`);
-
-            const randomPosition = () => {
-                const xPos = Math.random() * (window.innerWidth - 100); // Position X aléatoire
-                const yPos = Math.random() * (window.innerHeight - 100); // Position Y aléatoire
-                orb.style.top = `${yPos}px`;
-                orb.style.left = `${xPos}px`;
-            };
-
-            // Style de l'orbe
-            orb.style.position = 'absolute';
-            orb.style.transition = 'all 0.5s ease';
-            orb.style.width = "80px"; // Taille de la hitbox (plus grande)
-            orb.style.height = "80px"; // Taille de la hitbox (plus grande)
-            orb.style.backgroundColor = "transparent"; // Fond transparent pour la hitbox
-            orb.style.borderRadius = "50%"; // Forme circulaire
-            orb.style.cursor = 'pointer'; // Curseur pointer pour indiquer qu'il est cliquable
-            orb.style.transform = "translate(-50%, -50%)"; // Recentre la hitbox
-            randomPosition();
-
-            // Ajouter un élément enfant pour l'apparence visuelle de l'orbe
-            const orbVisual = document.createElement('div');
-            orbVisual.style.width = "50px"; // Taille visible de l'orbe
-            orbVisual.style.height = "50px"; // Taille visible de l'orbe
-            orbVisual.style.backgroundColor = "#ff4655"; // Couleur rouge Valorant
-            orbVisual.style.borderRadius = "50%"; // Forme circulaire
-            orbVisual.style.boxShadow = "0 0 15px rgba(255, 70, 85, 0.8)";
-            orbVisual.style.position = "absolute";
-            orbVisual.style.top = "50%";
-            orbVisual.style.left = "50%";
-            orbVisual.style.transform = "translate(-50%, -50%)"; // Recentre l'apparence visuelle
-
-            // Ajouter un logo d'œil à l'intérieur de l'orbe
-            const eyeLogo = document.createElement('img');
-            eyeLogo.src = "assets/reyna-oeil.png"; // Chemin vers l'image du logo d'œil
-            eyeLogo.alt = "Eye Logo";
-            eyeLogo.style.width = "30px";
-            eyeLogo.style.height = "30px";
-            eyeLogo.style.position = "absolute";
-            eyeLogo.style.top = "50%";
-            eyeLogo.style.left = "50%";
-            eyeLogo.style.transform = "translate(-50%, -50%)"; // Centrer le logo
-            orbVisual.appendChild(eyeLogo);
-
-            orb.appendChild(orbVisual);
-
-            // Ajouter un événement de clic sur l'orbe
-            orb.addEventListener('click', () => {
-                const rewardPoints = Math.floor(Math.random() * 50) + 10; // Récompense aléatoire entre 10 et 50
-                credits += rewardPoints;
-                updateCreditsDisplay();
-
-                // Afficher "+X" après le clic
-                const rewardText = document.createElement('div');
-                rewardText.textContent = `+${rewardPoints}`;
-                rewardText.style.position = 'absolute';
-                rewardText.style.top = orb.style.top;
-                rewardText.style.left = orb.style.left;
-                rewardText.style.transform = "translate(-50%, -50%)";
-                rewardText.style.color = "#ff4655";
-                rewardText.style.fontSize = "1.5rem";
-                rewardText.style.fontWeight = "bold";
-                rewardText.style.textShadow = "0 0 10px rgba(255, 70, 85, 0.8)";
-                rewardText.style.animation = "fadeOut 1s ease forwards";
-                document.body.appendChild(rewardText);
-
-                // Supprimer le texte après l'animation
-                setTimeout(() => rewardText.remove(), 1000);
-
-                // Déplacement rapide avant disparition
-                orb.style.transform = "scale(1.5)"; // Animation d'agrandissement
-                setTimeout(() => {
-                    orb.remove();
-                }, 200); // Disparition rapide
-            });
-
-            // Ajouter l'orbe au DOM
-            document.body.appendChild(orb);
-
-            // Disparition automatique si non cliqué
             setTimeout(() => {
-                if (orb && orb.parentElement) {
-                    orb.remove();
-                }
-            }, 5000); // Temps avant disparition
+                const orb = document.createElement('div');
+                orb.classList.add('bonus-orb');
+                orb.setAttribute('id', `bonus-orb-${i}`);
+
+                const randomPosition = () => {
+                    const xPos = Math.random() * (window.innerWidth - 100); // Position X aléatoire
+                    const yPos = Math.random() * (window.innerHeight - 100); // Position Y aléatoire
+                    orb.style.top = `${yPos}px`;
+                    orb.style.left = `${xPos}px`;
+                };
+
+                // Style de l'orbe
+                orb.style.position = 'absolute';
+                orb.style.transition = 'all 0.5s ease';
+                orb.style.width = "80px"; // Taille de la hitbox (plus grande)
+                orb.style.height = "80px"; // Taille de la hitbox (plus grande)
+                orb.style.backgroundColor = "transparent"; // Fond transparent pour la hitbox
+                orb.style.borderRadius = "50%"; // Forme circulaire
+                orb.style.cursor = 'pointer'; // Curseur pointer pour indiquer qu'il est cliquable
+                orb.style.transform = "translate(-50%, -50%)"; // Recentre la hitbox
+                randomPosition();
+
+                // Ajouter un élément enfant pour l'apparence visuelle de l'orbe
+                const orbVisual = document.createElement('div');
+                orbVisual.style.width = "50px"; // Taille visible de l'orbe
+                orbVisual.style.height = "50px"; // Taille visible de l'orbe
+                orbVisual.style.backgroundColor = "#ff4655"; // Couleur rouge Valorant
+                orbVisual.style.borderRadius = "50%"; // Forme circulaire
+                orbVisual.style.boxShadow = "0 0 15px rgba(255, 70, 85, 0.8)";
+                orbVisual.style.position = "absolute";
+                orbVisual.style.top = "50%";
+                orbVisual.style.left = "50%";
+                orbVisual.style.transform = "translate(-50%, -50%)"; // Recentre l'apparence visuelle
+
+                // Ajouter un logo d'œil à l'intérieur de l'orbe
+                const eyeLogo = document.createElement('img');
+                eyeLogo.src = "assets/reyna-oeil.png"; // Chemin vers l'image du logo d'œil
+                eyeLogo.alt = "Eye Logo";
+                eyeLogo.style.width = "30px";
+                eyeLogo.style.height = "30px";
+                eyeLogo.style.position = "absolute";
+                eyeLogo.style.top = "50%";
+                eyeLogo.style.left = "50%";
+                eyeLogo.style.transform = "translate(-50%, -50%)"; // Centrer le logo
+                orbVisual.appendChild(eyeLogo);
+
+                orb.appendChild(orbVisual);
+
+                // Ajouter un événement de clic sur l'orbe
+                orb.addEventListener('click', () => {
+                    const rewardPoints = Math.floor(Math.random() * 50) + 10; // Récompense aléatoire entre 10 et 50
+                    credits += rewardPoints;
+                    updateCreditsDisplay();
+
+                    // Afficher "+X" après le clic
+                    const rewardText = document.createElement('div');
+                    rewardText.textContent = `+${rewardPoints}`;
+                    rewardText.style.position = 'absolute';
+                    rewardText.style.top = orb.style.top;
+                    rewardText.style.left = orb.style.left;
+                    rewardText.style.transform = "translate(-50%, -50%)";
+                    rewardText.style.color = "#ff4655";
+                    rewardText.style.fontSize = "1.5rem";
+                    rewardText.style.fontWeight = "bold";
+                    rewardText.style.textShadow = "0 0 10px rgba(255, 70, 85, 0.8)";
+                    rewardText.style.animation = "fadeOut 1s ease forwards";
+                    document.body.appendChild(rewardText);
+
+                    // Supprimer le texte après l'animation
+                    setTimeout(() => rewardText.remove(), 1000);
+
+                    // Déplacement rapide avant disparition
+                    orb.style.transform = "scale(1.5)"; // Animation d'agrandissement
+                    setTimeout(() => {
+                        orb.remove();
+                    }, 200); // Disparition rapide
+                });
+
+                // Ajouter l'orbe au DOM
+                document.body.appendChild(orb);
+
+                // Disparition automatique si non cliqué
+                setTimeout(() => {
+                    if (orb && orb.parentElement) {
+                        orb.remove();
+                    }
+                }, 5000); // Temps avant disparition
+            }, i * (Math.random() * 1000 + 1000)); // Délai entre 1 et 2 secondes pour chaque orbe
         }
 
         // Réapparition des orbes après un délai aléatoire
